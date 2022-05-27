@@ -7,7 +7,6 @@ function handler(req, res) {
     const email = req.body.email;
     const feedbackText = req.body.text;
 
-
     const newFeedBack = {
       id: new Date().toISOString(),
       email: email,
@@ -15,6 +14,7 @@ function handler(req, res) {
     }
 
     const filePath = path.join(process.cwd(), 'data', 'feedback.json');
+
     const fileData = fs.readFileSync(filePath);
 
     const data = JSON.parse(fileData);
@@ -22,6 +22,7 @@ function handler(req, res) {
     data.push(newFeedBack);
 
     fs.writeFileSync(filePath, JSON.stringify(data));
+    res.status(201).json({ message: 'sucesso', feedback: newFeedBack });
 
   } else {
 
